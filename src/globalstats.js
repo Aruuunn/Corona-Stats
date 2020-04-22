@@ -26,10 +26,9 @@ export class GlobalStats extends Component {
     console.log(this.state.results)
     return (
       <Fragment>
-        <div className="row" >
-        { this.state.isLoading?
-         <div  style={{display:'flex',justifyContent:'center'}}><div className="lds-facebook col s12 m"><div></div><div></div><div></div></div></div>:null}
-          </div>
+       <div>
+       { (this.state.isLoading) ? <div  style={{display:'flex',justifyContent:'center'}}><div className="lds-facebook col s12 m"><div></div><div></div><div></div></div></div>:null}
+       </div>
           {  this.state.results ?
           <div className="section">
           <h4 id="global" className="section scrollspy"><FontAwesomeIcon icon={faGlobeAmericas} />  Global</h4>

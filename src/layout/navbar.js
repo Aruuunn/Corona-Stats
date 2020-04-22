@@ -9,13 +9,13 @@ export default function NavBar() {
     <Fragment>
       <nav>
         <div className="nav-wrapper">
-          <a href="#!" className="brand-logo">
-            <i className="material-icons" style={{ fontSize: "50px" }}>
+          <a href="#!" className="brand-logo ">
+            <i className="material-icons hide-on-small-and-down" style={{ fontSize: "50px" }}>
               assessment
             </i>{" "}
             Corona Stats
           </a>
-          <a href="#" data-target="mobile-demo" className="sidenav-trigger">
+          <a href="#!" data-target="mobile-demo" className="sidenav-trigger">
             <i className="material-icons">menu</i>
           </a>
           <ul className="right hide-on-med-and-down">

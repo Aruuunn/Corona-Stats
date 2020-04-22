@@ -19,11 +19,9 @@ export class Main extends Component {
                 rapidly , Its safe to be at your Home .<b>Stay Home , Stay safe !</b> 
               </p>
             </div>
-            <div>
-              <GlobalStats {...this.props}/>
-              
-            </div>
+            
           </div>
+          <GlobalStats {...this.props}/>
         </div>
       </Fragment>
     );
