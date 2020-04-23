@@ -3,7 +3,9 @@ import GlobalStats from "./globalstats";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChartBar } from '@fortawesome/free-solid-svg-icons';
 import {withRouter} from 'react-router-dom';
+
 export class Main extends Component {
+ 
   render() {
     return (
       <Fragment>
@@ -21,8 +23,9 @@ export class Main extends Component {
             </div>
             
           </div>
-          <GlobalStats {...this.props}/>
+         
         </div>
+        <GlobalStats {...this.props}/>
       </Fragment>
     );
   }

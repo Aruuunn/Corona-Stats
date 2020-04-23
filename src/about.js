@@ -2,13 +2,14 @@ import React, { Fragment } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub,faLinkedin} from '@fortawesome/free-brands-svg-icons';
 import './about.css';
+
 function About() {
   return (
     <Fragment>
-        <div className="container">
+        <main className="container">
       <h1>About</h1>
       <p>
-          Version 1.0.0<br/>
+          Version 1.0.1<br/>
           Powered by COVID-19 API
       </p>
       <hr/>
@@ -18,7 +19,8 @@ function About() {
      
         <a href="https://www.linkedin.com/in/arun-murugan-50885717a/"><FontAwesomeIcon icon={faLinkedin}/></a>
       </div>
-      </div>
+      </main>
+    
     </Fragment>
   );
 }

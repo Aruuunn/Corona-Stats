@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import M from 'materialize-css';
 import './index.css';
+import Footer from "./layout/footer";
 import {
   BarChart,
   Bar,
@@ -23,7 +24,8 @@ export class DetailView extends Component {
     isRL:false,
     totalRecovered:0,
     totalConfirmed:0,
-    totalDeaths:0
+    totalDeaths:0,
+    errMsg:null
   };
   componentDidMount(){
     this.setState({});
@@ -39,7 +41,7 @@ export class DetailView extends Component {
 
   componentDidUpdate() {
     M.Tabs.init(document.querySelector('.tabs'),{});
-   if(!this.state.isCL&&!this.state.isDL&!this.state.isRL){
+   if(!this.state.isCL&&!this.state.isDL&!this.state.isRL && !this.state.errMsg){
     this.setState({isCL:true,isDL:true,isRL:true});
     console.log("hello")
     axios
@@ -48,21 +50,21 @@ export class DetailView extends Component {
           this.props.match.params.country.trim()+"/status/confirmed"
       )
       .then((res) => this.setState({ confirmed: res.data ,isCL:false}))
-      .catch((err) => console.log(err.message));
+      .catch((err) => this.setState({isCL:false,isDL:false,isRL:false,errMsg:err.message}));
       axios
       .get(
         "https://api.covid19api.com/total/country/" +
           this.props.match.params.country.trim()+"/status/deaths"
       )
       .then((res) => this.setState({ deaths: res.data ,isDL:false}))
-      .catch((err) => console.log(err.message));
+      .catch((err) =>this.setState({isCL:false,isDL:false,isRL:false,errMsg:err.message}));
       axios
       .get(
         "https://api.covid19api.com/total/country/" +
           this.props.match.params.country.trim()+"/status/recovered"
       )
       .then((res) => this.setState({ recovered: res.data ,isRL:false}))
-      .catch((err) => console.log(err.message));
+      .catch((err) =>this.setState({isCL:false,isDL:false,isRL:false,errMsg:err.message}));
      
    }
   }
@@ -72,7 +74,18 @@ export class DetailView extends Component {
     let totalConfirmed = 0,totalDeaths = 0,totalRecovered = 0;
     return (
       <div>
-        { (this.state.isCL||this.state.isDL||this.state.isRL) ? <div  style={{display:'flex',justifyContent:'center'}}><div className="lds-facebook col s12 m"><div></div><div></div><div></div></div></div>:
+        {this.state.errMsg?
+        <div className="center-align red-text">
+          <h4>{this.state.errMsg}</h4>
+        
+        </div>:
+       
+        <div>
+        { (this.state.isCL||this.state.isDL||this.state.isRL) ?<div style={{ display: "flex", justifyContent: "center" }}>
+              <div className="lds-facebook col s12 m">
+              <div></div><div></div><div></div>
+              </div>
+            </div>:
         (<div className="row">
           <div className="col s12">
             <ul className="tabs">
@@ -91,7 +104,7 @@ export class DetailView extends Component {
             </ul>
           </div>
 
-          <div id="ConfirmedCases" className="col s12">
+          <div id="ConfirmedCases" className="col s12" style={{marginTop:'20px'}}>
             <div>
               <h5>Confirmed Cases  </h5>
               {this.state.confirmed ? (
@@ -120,7 +133,7 @@ export class DetailView extends Component {
 
             </div>
           </div>
-          <div id="DeathCases" className="col s12">
+          <div id="DeathCases" className="col s12" style={{marginTop:'20px'}}>
             <div>
               <h5>Death Cases</h5>
               {this.state.deaths ? (
@@ -147,7 +160,7 @@ export class DetailView extends Component {
               ) : null}
             </div>
           </div>
-          <div id="RecoveredCases" className="col s12">
+          <div id="RecoveredCases" className="col s12" style={{marginTop:'20px'}}>
             <div>
               <h5>Recovered Cases</h5>
               {this.state.recovered ? (
@@ -176,11 +189,17 @@ export class DetailView extends Component {
                 <h5>
                     Total Recovered Cases <b>{totalRecovered}</b>
                 </h5>
+               
                 </div>
               ) : null}
             </div>
           </div>
+         
         </div>)}
+        {!(this.state.isCL||this.state.isDL||this.state.isRL) ? 
+        <div style={{marginTop:'100px'}}><Footer /></div>:null}
+        </div>
+        }
       </div>
     );
   }
